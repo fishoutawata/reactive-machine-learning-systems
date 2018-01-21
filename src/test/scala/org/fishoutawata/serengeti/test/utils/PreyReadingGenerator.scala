@@ -7,11 +7,25 @@ import com.outworkers.util.samplers.Sample
 
 import java.time.Instant
 
+import scala.util.Random
+
 trait PreyReadingGenerator {
   implicit object PreyReadingGenerator extends Sample[PreyReading] {
     override def sample: PreyReading = {
-      PreyReading(UUIDs.timeBased(), 36, 16, Instant.now().toEpochMilli, 12.0, 18, 0.60)
+      val r: Random = new Random
 
+      val bounds = (1 to 2)
+        .map(_ => r.nextInt(100).toDouble + 1L)
+        .sortWith(_ > _)
+
+      PreyReading(
+        UUIDs.timeBased(),
+        1 + r.nextInt(40) ,
+        1 + r.nextInt(16),
+        Instant.now().toEpochMilli,
+        bounds(1),
+        bounds(0),
+        r.nextDouble())
     }
   }
 }
