@@ -1,0 +1,19 @@
+version: '3'
+services:
+
+###############################
+ cassandra0:
+  image: cassandra:latest
+  container_name: cassandra0
+  ports:
+   - 9042:9042
+   - 9160:9160
+   - 7199:7199
+   - 8778:8778
+  environment:
+   - CASSANDRA_SEEDS=cassandra0
+   - CASSANDRA_CLUSTER_NAME=rmls
+  ulimits:
+    memlock: -1
+    nproc: 32768
+    nofile: 100000
